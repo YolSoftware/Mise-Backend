@@ -1,6 +1,10 @@
-Yol/mise/PostController.java
- Yol.mise.PostController
-Yol/mise/MiseBackendApplication.java
- Yol.mise.MiseBackendApplication
 Yol/mise/RequestController.java
  Yol.mise.RequestController
+Yol/mise/GetController.java
+ Yol.mise.GetController
+Yol/mise/MiseBackendApplication.java
+ Yol.mise.MiseBackendApplication
+Yol/mise/PostController.java
+ Yol.mise.PostController
+Yol/mise/WebConfig.java
+ Yol.mise.WebConfig
