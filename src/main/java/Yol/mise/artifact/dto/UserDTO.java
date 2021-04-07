@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter // Getter 생성
 @Setter // Setter 생성
 public class UserDTO {
-    private int number_station;
+    private String number_station;
     private String station;
     //private int seq;
     //private String name;

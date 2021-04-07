@@ -17,8 +17,8 @@ public class UserController{
     private UserDAO userDAO;
 
     @RequestMapping("/users")
-    public List<UserDTO> users(@RequestParam(value="number_station",defaultValue="")int number_station) throws Exception{
-        final UserDTO param = new UserDTO(number_station,null);
+    public List<UserDTO> users(@RequestParam String ns) throws Exception{
+        final UserDTO param = new UserDTO(ns,null);
         final List<UserDTO> userList = userDAO.selectUsers(param);
         return userList;
     }
