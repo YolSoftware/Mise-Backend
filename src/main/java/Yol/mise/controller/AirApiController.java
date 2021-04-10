@@ -21,7 +21,7 @@ import java.util.Map;
 public class AirApiController {
 
     @GetMapping("/api")
-    public String callApi() throws IOException {
+    public String callStMsrApi() throws IOException {
 
         String url_str = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/" +
                 "getMsrstnAcctoRltmMesureDnsty" +
@@ -35,6 +35,8 @@ public class AirApiController {
         HttpURLConnection url_connection = (HttpURLConnection) url.openConnection();
         url_connection.setRequestMethod("GET");
         OPStnMsrDTO stn_msr = new OPStnMsrDTO();
+
+
         if (url_connection.getResponseCode() == 200) {
             // JACSON 라이브러리를 이용한 JSON PARSING
             ObjectMapper mapper = new ObjectMapper();
@@ -50,10 +52,9 @@ public class AirApiController {
 
         };
         /*
-        {"response":
-            {"body":
-                {"totalCount":743,
-                    "items":[{"so2Grade":"1","coFlag":null,"khaiValue":"73","so2Value":"0.004","coValue":"0.4","pm10Flag":null,"pm10Value":"36","o3Grade":"2","khaiGrade":"2","no2Flag":null,"no2Grade":"1","o3Flag":null,"so2Flag":null,"dataTime":"2021-04-09 17:00","coGrade":"1","no2Value":"0.014","pm10Grade":"2","o3Value":"0.058"}],"pageNo":1,"numOfRows":1},"header":{"resultMsg":"NORMAL_CODE","resultCode":"00"}}}
+"items":[{"so2Grade":"1","coFlag":null,"khaiValue":"73","so2Value":"0.004","coValue":"0.4","pm10Flag":null,"pm10Value":"36",
+"o3Grade":"2","khaiGrade":"2","no2Flag":null,"no2Grade":"1","o3Flag":null,"so2Flag":null,"dataTime":"2021-04-09 17:00",
+"coGrade":"1","no2Value":"0.014","pm10Grade":"2","o3Value":"0.058"}],"pageNo":1,"numOfRows":1}}
          */
         return "0";
     }
