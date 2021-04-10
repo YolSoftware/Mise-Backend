@@ -10,13 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping({"/api", "/api/misenow"})
-public class GetController
-{
+public class GetGPSController {
     int count = 0;
 
     @GetMapping("/location")
-    public String getLocation (@RequestBody @Validated GetLocation location)
-    {
+    public String getLocation (@RequestBody @Validated GetLocation location) {
         System.out.println("위도 : " + location.latitude + " 경도 : " + location.longitude);
         return "위도 : " + location.latitude + " 경도 : " + location.longitude;
     }
@@ -29,16 +27,14 @@ public class GetController
     }
 
     @GetMapping("/test")
-    public String testMessage ()
-    {
+    public String testMessage () {
         System.out.println("욜꾤쑐뾸쬴뚈뚈ㄲ뚈");
         return "욜꾤쑐뾸쬴뚈뚈ㄲ뚈";
     }
 
     @ResponseBody
     @GetMapping("/fineDust")
-    public String dustData ()
-    {
+    public String dustData () {
         count++;
 
         JsonObject nowData = new JsonObject();

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @MapperScan(basePackages = "Yol.mise.artifact.dao")
-public class UserController{
+public class DBController {
     @Autowired
     private DBStNmDAO DBStnNm;
 

@@ -4,6 +4,7 @@ import Yol.mise.Artifact.dto.OPStnMsrDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -13,9 +14,10 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/airapi")
 public class AirApiController {
 
-    @GetMapping("/stnmsrapi")
+    @GetMapping("/stnmsr")
     public String callStMsrApi() throws IOException {
 
         String url_str = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/" +
