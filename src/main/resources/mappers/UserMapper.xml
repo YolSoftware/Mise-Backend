@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Yol.mise.artifact.dao.UserDAO"><!--namespace를 통해 UserDAO와 연결합니다. -->
-    <select id="selectUsers" parameterType="Yol.mise.artifact.dto.UserDTO"
-            resultType="Yol.mise.artifact.dto.UserDTO"><!-- selectUsers()메서드를 호출하면 실행할 SELECT문이며,
+<mapper namespace="Yol.mise.Artifact.dao.DBStNmDAO"><!--namespace를 통해 UserDAO와 연결합니다. -->
+    <select id="selectUsers" parameterType="Yol.mise.Artifact.dto.DBStNmDTO"
+            resultType="Yol.mise.Artifact.dto.DBStNmDTO"><!-- selectUsers()메서드를 호출하면 실행할 SELECT문이며,
 						UserDTO 객체를 파라미터로 받아, UserDTO객체를 반환합니다.-->
         SELECT `number_station`, `station`
         FROM station_name
