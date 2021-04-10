@@ -1,4 +1,4 @@
-package Yol.mise.artifact.DTO;
+package Yol.mise.Artifact.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

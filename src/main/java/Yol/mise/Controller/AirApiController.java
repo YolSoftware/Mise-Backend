@@ -1,26 +1,21 @@
-package Yol.mise.controller;
+package Yol.mise.Controller;
 
-import Yol.mise.artifact.DTO.OPStnMsrDTO;
+import Yol.mise.Artifact.dto.OPStnMsrDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
 public class AirApiController {
 
-    @GetMapping("/api")
+    @GetMapping("/stnmsrapi")
     public String callStMsrApi() throws IOException {
 
         String url_str = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/" +
@@ -50,7 +45,7 @@ public class AirApiController {
             //stn_msr = mapper.readValue(items, OPStnMsrDTO.class);
             System.out.println(tmp);
 
-        };
+        }
         /*
 "items":[{"so2Grade":"1","coFlag":null,"khaiValue":"73","so2Value":"0.004","coValue":"0.4","pm10Flag":null,"pm10Value":"36",
 "o3Grade":"2","khaiGrade":"2","no2Flag":null,"no2Grade":"1","o3Flag":null,"so2Flag":null,"dataTime":"2021-04-09 17:00",
