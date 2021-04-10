@@ -1,4 +1,4 @@
-package Yol.mise;
+package Yol.mise.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

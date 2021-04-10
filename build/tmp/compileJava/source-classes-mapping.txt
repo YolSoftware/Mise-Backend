@@ -1,10 +1,11 @@
-Yol/mise/RequestController.java
- Yol.mise.RequestController
-Yol/mise/GetController.java
- Yol.mise.GetController
-Yol/mise/MiseBackendApplication.java
- Yol.mise.MiseBackendApplication
-Yol/mise/PostController.java
- Yol.mise.PostController
 Yol/mise/WebConfig.java
  Yol.mise.WebConfig
+Yol/mise/Controller/RequestController.java
+ Yol.mise.Controller.RequestController
+Yol/mise/MiseBackendApplication.java
+ Yol.mise.MiseBackendApplication
+Yol/mise/Controller/PostController.java
+ Yol.mise.Controller.PostController
+Yol/mise/Controller/GetController.java
+ Yol.mise.Controller.GetController
+ Yol.mise.Controller.GetController$GetLocation

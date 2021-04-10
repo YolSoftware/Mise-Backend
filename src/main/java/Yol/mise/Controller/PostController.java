@@ -1,4 +1,4 @@
-package Yol.mise;
+package Yol.mise.Controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ public class PostController
     @PostMapping("/ip")
     public ResponseEntity<String> ip (HttpServletRequest request) {
         // 요청을 보낸 클라이언트의 IP주소를 반환합니다.
-        System.out.println("11");
+        System.out.println(request.getRemoteAddr());
         return ResponseEntity.ok(request.getRemoteAddr());
     }
 
