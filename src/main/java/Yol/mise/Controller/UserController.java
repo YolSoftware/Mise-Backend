@@ -18,7 +18,7 @@ public class UserController{
 
     @RequestMapping("/users")
     public List<DBStNmDTO> users(@RequestParam String ns) throws Exception{
-        final DBStNmDTO param = new DBStNmDTO(ns,null);
+        final DBStNmDTO param = new DBStNmDTO(ns,null,null,null,null);
         final List<DBStNmDTO> userList = DBStnNm.selectUsers(param);
         return userList;
     }
