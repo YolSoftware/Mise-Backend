@@ -29,7 +29,7 @@ public class GetGPSController {
     @GetMapping("/test")
     public String testMessage () {
         System.out.println("욜꾤쑐뾸쬴뚈뚈ㄲ뚈");
-        return "욜꾤쑐뾸쬴뚈뚈ㄲ뚈";
+        return "욜꾤쑐뾸쬴뚈뚈ㄲ뚈ㄹ";
     }
 
     @ResponseBody
