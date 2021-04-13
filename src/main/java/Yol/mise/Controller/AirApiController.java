@@ -1,6 +1,7 @@
 package Yol.mise.Controller;
 
 import Yol.mise.Artifact.dto.OPStnMsrDTO;
+import Yol.mise.Artifact.dto.OPWeekFrcstDTO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,8 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,5 +84,81 @@ public class AirApiController {
         }
     }
 
+    @GetMapping("/week")
+    public Object callWeekFrcstApi() throws IOException {
+        JsonObject raw_json;
+        Gson gson = new Gson();
+        int data_count = 0;
+
+        String api_url = base_url + "getMinuDustWeekFrcstDspth";
+        LocalDate cur_date = LocalDate.now();
+        LocalTime cur_time = LocalTime.now();
+        LocalTime base_time = LocalTime.of(18,00,00,00);
+
+        if (cur_time.isAfter(base_time)) {
+            HttpHeaders headers = new HttpHeaders();
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            String enc_date = URLEncoder.encode(cur_date.toString(), "UTF-8");
+            UriComponents uri_components = UriComponentsBuilder.fromHttpUrl(api_url)
+                    .queryParam("searchDate", enc_date)
+                    .queryParam("returnType","json")
+                    .queryParam("serviceKey",service_key)
+                    .queryParam("numOfRows","1")
+                    .queryParam("pageNo","1")
+                    .build();
+
+            URL url = new URL(uri_components.toString());
+            String raw_string = httpConnection(url);
+            raw_json = gson.fromJson(raw_string, JsonObject.class);
+            raw_json = gson.fromJson(raw_json.get("response"), JsonObject.class);
+            raw_json = gson.fromJson(raw_json.get("body"), JsonObject.class);
+            data_count = Integer.parseInt(raw_json.get("totalCount").toString());
+
+            if (data_count > 0) {
+                Type listType = new TypeToken<ArrayList<OPWeekFrcstDTO>>(){}.getType();
+                List<OPWeekFrcstDTO> week_frcst_dto = gson.fromJson(raw_json.get("items").toString(), listType);;
+                return week_frcst_dto;
+            } else {
+                return "아직 측정되지 않았습니다.";
+            }
+        }
+
+        else {
+            HttpHeaders headers = new HttpHeaders();
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            LocalDate test = LocalDate.of(2021,04,13);
+            String enc_date = URLEncoder.encode(test.toString(), "UTF-8");
+            UriComponents uri_components = UriComponentsBuilder.fromHttpUrl(api_url)
+                    .queryParam("searchDate", enc_date)
+                    .queryParam("returnType","json")
+                    .queryParam("serviceKey",service_key)
+                    .queryParam("numOfRows","1")
+                    .queryParam("pageNo","1")
+                    .build();
+
+            URL url = new URL(uri_components.toString());
+            System.out.println(url.toString());
+            String raw_string = httpConnection(url);
+            raw_json = gson.fromJson(raw_string, JsonObject.class);
+            raw_json = gson.fromJson(raw_json.get("response"), JsonObject.class);
+            raw_json = gson.fromJson(raw_json.get("body"), JsonObject.class);
+            data_count = Integer.parseInt(raw_json.get("totalCount").toString());
+
+            if (data_count > 0) {
+                Type listType = new TypeToken<ArrayList<OPWeekFrcstDTO>>(){}.getType();
+                List<OPWeekFrcstDTO> week_frcst_dto = gson.fromJson(raw_json.get("items").toString(), listType);;
+                return week_frcst_dto;
+            } else {
+                return "이건 무슨에러일까?";
+            }
+            //return "18시 이후에 다시 시도하세요";
+        }
+    }
+
+    @GetMapping("/capmsr")
+    public Object callCapMsrApi() throws IOException {
+
+        return "";
+    }
 
 }
