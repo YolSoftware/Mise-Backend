@@ -1,5 +1,6 @@
 package Yol.mise.Controller;
 
+import Yol.mise.Artifact.dto.DBStNmDTO;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping({"/api", "/api/misenow"})
 public class GetGPSController {
     int count = 0;
+
+    
 
     @GetMapping("/location")
     public String getLocation (@RequestBody @Validated GetLocation location) {
