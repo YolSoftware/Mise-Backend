@@ -9,7 +9,7 @@ import Yol.mise.Artifact.dao.DBStNmDAO;
 import Yol.mise.Artifact.dto.DBStNmDTO;
 
 import java.util.List;
-
+//Controller 만들기전에 레포를 만들어야됨!!!!
 @RestController
 @MapperScan(basePackages = "Yol.mise.artifact.dao")
 public class DBDataController{
