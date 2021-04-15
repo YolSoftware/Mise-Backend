@@ -1,0 +1,7 @@
+
+
+@Entity
+@Data
+@Table(name = "station_info")
+public class DBStInfoDAO implements Serializable{
+  
