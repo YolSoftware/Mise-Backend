@@ -8,8 +8,8 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "station_info")
-public class DBStInfoDAO implements Serializable{
-  public DBStInfoDAO() {}
+public class DBStInfoDTO implements Serializable{
+  public DBStInfoDTO() {}
   
    @Id @GenerataeValue(strategy = GenerationType.IDENTITY)
    @Column(name = "station_name", updatable = true, nullable = false)
