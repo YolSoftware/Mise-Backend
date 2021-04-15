@@ -12,14 +12,6 @@ import java.util.List;
 
 @RestController
 @MapperScan(basePackages = "Yol.mise.artifact.dao")
-public class UserController{
-    @Autowired
-    private DBStNmDAO DBStnNm;
+public class DBDataController{
 
-    @RequestMapping("/users")
-    public List<DBStNmDTO> users(@RequestParam String ns) throws Exception{
-        final DBStNmDTO param = new DBStNmDTO(ns,null,null,null,null);
-        final List<DBStNmDTO> userList = DBStnNm.selectUsers(param);
-        return userList;
-    }
 }
