@@ -2,6 +2,7 @@ package Yol.mise.Controller;
 
 import Yol.mise.Artifact.dto.OPStnMsrDTO;
 import Yol.mise.Artifact.dto.OPWeekFrcstDTO;
+import Yol.mise.OpenApiHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -31,6 +32,8 @@ import java.util.List;
 public class AirApiController {
     final String base_url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/";
     final String service_key = "X87euFz3fd072hiDInhC%2F%2BvESJAmhyTBt%2FfIQT0iLvZiC3UZEDAcVtSZxNUZqW9GVaaRi%2BaCeL1Oz7ss8Scklw%3D%3D";
+    private Gson gson = new Gson();
+
     public String httpConnection(URL url) throws IOException {
         HttpURLConnection url_connection = (HttpURLConnection) url.openConnection();
         url_connection.setRequestMethod("GET");
@@ -48,15 +51,9 @@ public class AirApiController {
     }
 
     @GetMapping("/stnmsr/{stn}")
-    public Object callStMsrApi(@PathVariable String stn) throws IOException{
-        JsonObject raw_json;
-        Gson gson = new Gson();
-        int data_count = 0;
+    public Object callStnMsrApi(@PathVariable String stn) throws IOException{
         String encode_stn = URLEncoder.encode(stn, "UTF-8");
         String api_url = base_url + "getMsrstnAcctoRltmMesureDnsty";
-
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<?> entity = new HttpEntity<>(headers);
         UriComponents uri_components = UriComponentsBuilder.fromHttpUrl(api_url)
                 .queryParam("stationName", encode_stn)
                 .queryParam("dataTerm","daily")
@@ -66,22 +63,18 @@ public class AirApiController {
                 .queryParam("serviceKey",service_key)
                 .queryParam("ver","1.0")
                 .build();
-
-        URL url = new URL(uri_components.toString());
-        String raw_string = httpConnection(url);
-
-        raw_json = gson.fromJson(raw_string, JsonObject.class);
-        raw_json = gson.fromJson(raw_json.get("response"), JsonObject.class);
-        raw_json = gson.fromJson(raw_json.get("body"), JsonObject.class);
-        data_count = Integer.parseInt(raw_json.get("totalCount").toString());
-
-        if (data_count > 0) {
-            Type listType = new TypeToken<ArrayList<OPStnMsrDTO>>(){}.getType();
-            List<OPStnMsrDTO> stn_msr_dto = gson.fromJson(raw_json.get("items").toString(), listType);;
-            return stn_msr_dto;
-        } else {
-            return "잘못된 스테이션 이름 입력";
+        OpenApiHelper helper = new OpenApiHelper(uri_components, null, null);
+        if( helper.setRawData() == 0) {
+            if (helper.setJsonString(helper.getRaw_data()) == 0) {
+                Type list_type = new TypeToken<ArrayList<OPStnMsrDTO>>(){}.getType();
+                List<OPStnMsrDTO> stn_msr_dto = gson.fromJson(helper.getJson_string(), list_type);
+                return stn_msr_dto;
+            }
+            else {
+                return "";
+            }
         }
+        return "";
     }
 
     @GetMapping("/week")
@@ -96,8 +89,6 @@ public class AirApiController {
         LocalTime base_time = LocalTime.of(18,00,00,00);
 
         if (cur_time.isAfter(base_time)) {
-            HttpHeaders headers = new HttpHeaders();
-            HttpEntity<?> entity = new HttpEntity<>(headers);
             String enc_date = URLEncoder.encode(cur_date.toString(), "UTF-8");
             UriComponents uri_components = UriComponentsBuilder.fromHttpUrl(api_url)
                     .queryParam("searchDate", enc_date)
@@ -115,8 +106,8 @@ public class AirApiController {
             data_count = Integer.parseInt(raw_json.get("totalCount").toString());
 
             if (data_count > 0) {
-                Type listType = new TypeToken<ArrayList<OPWeekFrcstDTO>>(){}.getType();
-                List<OPWeekFrcstDTO> week_frcst_dto = gson.fromJson(raw_json.get("items").toString(), listType);;
+                Type list_type = new TypeToken<ArrayList<OPWeekFrcstDTO>>(){}.getType();
+                List<OPWeekFrcstDTO> week_frcst_dto = gson.fromJson(raw_json.get("items").toString(), list_type);;
                 return week_frcst_dto;
             } else {
                 return "아직 측정되지 않았습니다.";
@@ -154,11 +145,4 @@ public class AirApiController {
             //return "18시 이후에 다시 시도하세요";
         }
     }
-
-    @GetMapping("/capmsr")
-    public Object callCapMsrApi() throws IOException {
-
-        return "";
-    }
-
 }
