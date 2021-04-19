@@ -9,11 +9,10 @@ import lombok.Setter;
 @Getter // Getter 생성
 @Setter // Setter 생성
 public class DBStNmDTO {
-    private String station_num;
+    private String station_name;
     private String station_location;
     private String station_x;
     private String station_y;
-    private String station_name;
     //private int seq;
     //private String name;
     //private String country;

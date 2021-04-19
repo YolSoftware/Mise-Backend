@@ -6,10 +6,10 @@
     <select id="selectUsers" parameterType="Yol.mise.Artifact.dto.DBStNmDTO"
             resultType="Yol.mise.Artifact.dto.DBStNmDTO"><!-- selectUsers()메서드를 호출하면 실행할 SELECT문이며,
 						UserDTO 객체를 파라미터로 받아, UserDTO객체를 반환합니다.-->
-        SELECT `STATION_NUM`, `STATION_LOCATION`,`STATION_X`, `STATION_Y`, `STATION_NAME`
+        SELECT `STATION_NAME`, `STATION_LOCATION`,`STATION_X`, `STATION_Y`
         FROM STATION_INFO
-        <if test='station_num != null'><!-- 만약 파라미터에 number_station가 있다면 SQL문에 WHERE절을 추가합니다. -->
-            WHERE STATION_NUM = #{station_num}
+        <if test='station_name != null'><!-- 만약 파라미터에 number_station가 있다면 SQL문에 WHERE절을 추가합니다. -->
+            WHERE STATION_NAME = #{station_name}
         </if>
     </select>
 </mapper>
