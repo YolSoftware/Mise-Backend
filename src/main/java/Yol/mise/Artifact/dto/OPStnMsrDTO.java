@@ -17,7 +17,7 @@ public class OPStnMsrDTO {
     private String coValue;
 
     private String pm10Grade;
-    private String pm10Flag;
+    private String pm10Flag; // 측정소 고장 여부. 기본값 null
     private String pm10Value;
 
     private String pm25Grade;

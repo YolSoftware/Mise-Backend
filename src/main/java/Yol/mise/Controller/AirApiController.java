@@ -2,7 +2,7 @@ package Yol.mise.Controller;
 
 import Yol.mise.Artifact.dto.OPStnMsrDTO;
 import Yol.mise.Artifact.dto.OPWeekFrcstDTO;
-import Yol.mise.OpenApiHelper;
+import Yol.mise.Service.OpenApiService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -50,6 +50,8 @@ public class AirApiController {
         return raw_string;
     }
 
+    // 측정소 이름으로 검색
+    // 측정 정보 가져옴.
     @GetMapping("/stnmsr/{stn}")
     public Object callStnMsrApi(@PathVariable String stn) throws IOException{
         String encode_stn = URLEncoder.encode(stn, "UTF-8");
@@ -63,7 +65,7 @@ public class AirApiController {
                 .queryParam("serviceKey",service_key)
                 .queryParam("ver","1.0")
                 .build();
-        OpenApiHelper helper = new OpenApiHelper(uri_components, null, null);
+        OpenApiService helper = new OpenApiService(uri_components, null, null);
         if( helper.setRawData() == 0) {
             if (helper.setJsonString(helper.getRaw_data()) == 0) {
                 Type list_type = new TypeToken<ArrayList<OPStnMsrDTO>>(){}.getType();

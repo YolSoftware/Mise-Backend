@@ -1,4 +1,4 @@
-package Yol.mise;
+package Yol.mise.Service;
 
 import Yol.mise.Artifact.OPErrorCode;
 import com.google.gson.Gson;
@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @Getter @Setter @AllArgsConstructor
-public class OpenApiHelper {
+public class OpenApiService {
     private UriComponents url_comp;
     private String json_string;
     private String raw_data;
@@ -63,4 +63,6 @@ public class OpenApiHelper {
             return 2;
         }
     }
+
+
 }
