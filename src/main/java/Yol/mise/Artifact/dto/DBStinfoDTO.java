@@ -15,18 +15,18 @@ public class DBStinfoDTO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//mysql의 auto_increment를 그대로 사용
-    @Column(updatable = true, nullable = false)
-    public Long station_number;
+    @Column(name = "station_number",updatable = true, nullable = false)
+    public Long stationNumber;
 
-    @Column(updatable = true, nullable = false)
-    public String station_name;
+    @Column(name = "station_name",updatable = true, nullable = false)
+    public String stationName;
 
-    @Column(updatable = true, nullable = false)
-    public String station_location;
+    @Column(name = "station_location",updatable = true, nullable = false)
+    public String stationLocation;
 
-    @Column(updatable = true, nullable = true)
-    public float station_x;
+    @Column(name = "station_x",updatable = true, nullable = true)
+    public float stationX;
 
-    @Column(updatable = true, nullable = true)
-    public float station_y;
+    @Column(name = "station_y",updatable = true, nullable = true)
+    public float stationY;
 }
