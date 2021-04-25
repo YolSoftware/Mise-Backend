@@ -67,7 +67,7 @@ public class DBTestController {
                        @PathVariable float stx,
                        @PathVariable float sty) throws Exception{
         //station_info.ifPresent(
-        if( dbStinfoService.updateStation(stname, stlocation, stx, sty)) {
+        if( dbStinfoService.updateStation(stname, stx, sty)) {
             System.out.println("Station Name : " + stname + "  : 측정소에 대한 데이터 수정에 성공하였습니다.");
             return stname + " 측정소에 대한 데이터 수정에 성공하였습니다.";
             

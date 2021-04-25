@@ -57,7 +57,6 @@ public class DBStinfoService {
     //기존 측정소 정보 수정
     @Transactional
     public boolean updateStation(String stname,
-                          String stlocation,
                           float stx,
                           float sty) throws Exception{
         Optional<DBStinfoDTO> dbStinfoDTOOptional = dbStinfoDAO.findByStationName(stname);
@@ -68,7 +67,7 @@ public class DBStinfoService {
                     DBStinfoDTO.builder()
                             .stationNumber(dbStinfoDTOOptional.get().stationNumber) //중복되는 값으로 인식하면 insert 두번으로 인식하여 오류남
                             .stationName(stname)
-                            .stationLocation(stlocation)
+                            .stationLocation(dbStinfoDTOOptional.get().stationLocation)
                             .stationX(stx)
                             .stationY(sty)
                             .build();
