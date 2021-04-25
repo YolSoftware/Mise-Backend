@@ -21,7 +21,7 @@ public class OPStnMsrDTO {
     private String pm10Value;
 
     private String pm25Grade;
-    private String pm25Flag;
+    private String pm25Flag; // 상태정보(점검및교정,장비점검,자료이상,통신장애)
     private String pm25Value;
 
     private String no2Grade;
@@ -35,5 +35,5 @@ public class OPStnMsrDTO {
     private String khaiValue;
     private String khaiGrade;
 
-    private String dataTime;
+    private String dataTime; // 오염도 측정 시간 (연-월-일)
 }
