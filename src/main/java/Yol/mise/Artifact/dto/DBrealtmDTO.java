@@ -14,54 +14,54 @@ public class DBrealtmDTO implements Serializable {
     public DBrealtmDTO() {
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//mysql의 auto_increment를 그대로 사용
-    @Column(updatable = true)
-    public Long station_number;
-
     @Id
-    @Column(updatable = true, nullable = false)
-    public String station_name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//mysql의 auto_increment를 그대로 사용
+    @Column(name ="station_number",updatable = true)
+    public Long stationNumber;
 
-    @Column(updatable = true, nullable = false)
-    public int all_air_grade;
+    @Column(name ="station_name",updatable = true, nullable = false)
+    public String stationName;
 
-    @Column(updatable = true, nullable = false)
+    @Column(name ="all_air_grade",updatable = true, nullable = false)
+    public int allAirGrade;
+
+    @Column(name ="so2",updatable = true, nullable = false)
     public float so2;
 
-    @Column(updatable = true, nullable = true)
+    @Column(name ="co",updatable = true, nullable = true)
     public float co;
 
-    @Column(updatable = true, nullable = true)
+    @Column(name ="o3",updatable = true, nullable = true)
     public float o3;
 
-    @Column(updatable = true, nullable = true)
+    @Column(name ="no2",updatable = true, nullable = true)
     public float no2;
 
-    @Column(updatable = true, nullable = true)
+    @Column(name ="pm10",updatable = true, nullable = true)
     public int pm10;
 
-    @Column(updatable = true, nullable = true)
+    @Column(name ="pm25",updatable = true, nullable = true)
     public int pm25;
 
-    @Column(updatable = true, nullable = true)
-    public int so2_grade;
+    @Column(name ="so2_grade",updatable = true, nullable = true)
+    public int so2Grade;
 
-    @Column(updatable = true, nullable = true)
-    public int co_grade;
+    @Column(name ="co_grade",updatable = true, nullable = true)
+    public int coGrade;
 
-    @Column(updatable = true, nullable = true)
-    public int o3_grade;
+    @Column(name ="o3_grade",updatable = true, nullable = true)
+    public int o3Grade;
 
-    @Column(updatable = true, nullable = true)
-    public int no2_grade;
+    @Column(name ="no2_grade",updatable = true, nullable = true)
+    public int no2Grade;
 
-    @Column(updatable = true, nullable = true)
-    public int pm10_grade;
+    @Column(name ="pm10_grade",updatable = true, nullable = true)
+    public int pm10Grade;
 
-    @Column(updatable = true, nullable = true)
-    public int pm25_grade;
+    @Column(name ="pm25_grade",updatable = true, nullable = true)
+    public int pm25Grade;
 
-    @Column(updatable = true, nullable = true)
-    public int all_air;
+    @Column(name ="all_air",updatable = true, nullable = true)
+    public int allAir;
 
 }
