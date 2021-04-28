@@ -120,5 +120,11 @@ public class DBTestController {
         }
     }
 
+    @GetMapping(value = "/allStationName")
+    public List<Object> allStationName() throws Exception{
+        List<Object> stationlist = dbStinfoService.findAllStationName();
+        return stationlist;
+    }
+
 
 }
