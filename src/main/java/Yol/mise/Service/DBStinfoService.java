@@ -32,6 +32,12 @@ public class DBStinfoService {
         return dbStinfoDTOOptional;
     }
 
+    //측정소(station_name) 모든 이름 반환
+    /*public List<Stirng> findAllStationName() throws Exception{
+        final List<DBStinfoDTO> dbStinfoDTOList = dbStinfoDAO.findAll();
+        return dbStinfoDTOList.
+    }*/
+
     //측정소 새로 만들기
     @Transactional
     public boolean createStation(String stname,
