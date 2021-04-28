@@ -1,29 +1,19 @@
 package Yol.mise.Controller;
 
-import Yol.mise.Artifact.dto.DBForecastViewDTO;
-import Yol.mise.Artifact.dto.TEST;
+import Yol.mise.Artifact.dto.DBtmafViewDTO;
+import Yol.mise.Artifact.dto.PostAirDataDTO;
 import Yol.mise.ExternLibrary.GeoPoint;
-import Yol.mise.Artifact.dao.DBStNmDAO;
 import Yol.mise.Artifact.dto.OPNearStnDTO;
 import Yol.mise.Artifact.dto.OPStnMsrDTO;
 import Yol.mise.Service.*;
 import Yol.mise.ExternLibrary.GeoTrans;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.devtools.classpath.ClassPathFileSystemWatcher;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,17 +30,7 @@ public class GetGPSController {
     private GetAirDataService get_air_data_service;
 
     @Autowired
-    private DBrealtmService db_realtm_service;
-
-    @Autowired
-    private DBForecastViewService db_forecast_view_service;
-
-    // GPS로 받아서
-    // 1. tm값으로 바꾸고,
-    // 2. 측정소 찾아서
-    // 3. 측정소 API 검색
-    // 4. return 측정 정보를 return. GPS 값을 보내줄 필요가 있냐.
-    DBStNmDAO dbStNmDAO;
+    private DBtmafService db_forecast_view_service;
 
     @ResponseBody
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/fineDust")
@@ -75,7 +55,7 @@ public class GetGPSController {
             String stn_address = op_near_stn_dto.get(0).getAddr();
 
             // stn_name을 이용하여 DB에 접근하는 service
-            TEST test = new TEST();
+            PostAirDataDTO test = new PostAirDataDTO();
             List<OPStnMsrDTO> stn_msr_dto = get_air_data_service.callStnMsrApi(stn_name);
 
             test.setStationAddress(stn_address);
@@ -85,13 +65,13 @@ public class GetGPSController {
             System.out.println(stn_name);
 
             try {
-                Optional<DBForecastViewDTO> optional = db_forecast_view_service.findForecast(stn_name);
-                DBForecastViewDTO data = optional.orElseThrow(NullPointerException::new);
-                System.out.println(data.getSTATION_NAME() + ", " + data.getSTATION_LOCATION());
+                Optional<DBtmafViewDTO> optional = db_forecast_view_service.findTmAfStation(stn_name);
+                DBtmafViewDTO data = optional.orElseThrow(NullPointerException::new);
+                System.out.println(data.getStationName() + ", " + data.getStationLocation());
 
                 System.out.println("db에 값이 있음");
 
-            } catch (NullPointerException e) {
+            } catch (Exception e) {
                 System.out.println("db에 값이 없음");
                 // DB에 최신 값이 없으면 API 호출
 
