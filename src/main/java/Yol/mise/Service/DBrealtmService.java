@@ -35,7 +35,6 @@ public class DBrealtmService {
     @Transactional
     public boolean updateStationAir(String stname, OPStnMsrDTO opStnMsrDTO) throws Exception{
         Optional<DBrealtmDTO> dBrealtmDTOOptional = dBrealtmDAO.findByStationName(stname);
-
         //station_info.ifPresent(
         if(dBrealtmDTOOptional.isPresent()) {
             DBrealtmDTO new_station =

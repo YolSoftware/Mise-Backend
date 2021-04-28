@@ -45,6 +45,8 @@ public class OpenApiService {
         Gson gson = new Gson();
         JsonObject json = gson.fromJson(raw_string, JsonObject.class);
 
+        System.out.println(raw_string);
+
         json = gson.fromJson(json.get("response"), JsonObject.class);
         OPErrorCode error_code = gson.fromJson(json.get("header"), OPErrorCode.class);
         if (error_code.getResultCode() == 0) {
