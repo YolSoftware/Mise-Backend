@@ -1,16 +1,18 @@
 package Yol.mise.Controller;
 
+import Yol.mise.Artifact.dto.DBForecastViewDTO;
+import Yol.mise.Artifact.dto.TEST;
 import Yol.mise.ExternLibrary.GeoPoint;
 import Yol.mise.Artifact.dao.DBStNmDAO;
 import Yol.mise.Artifact.dto.OPNearStnDTO;
 import Yol.mise.Artifact.dto.OPStnMsrDTO;
-import Yol.mise.Service.FindStnService;
+import Yol.mise.Service.*;
 import Yol.mise.ExternLibrary.GeoTrans;
-import Yol.mise.Service.GetAirDataService;
-import Yol.mise.Service.OpenApiService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.devtools.classpath.ClassPathFileSystemWatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +25,25 @@ import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api", "/api/misenow"})
 public class GetGPSController {
     int count = 0;
-    final String base_url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/";
-    final String service_key = "X87euFz3fd072hiDInhC%2F%2BvESJAmhyTBt%2FfIQT0iLvZiC3UZEDAcVtSZxNUZqW9GVaaRi%2BaCeL1Oz7ss8Scklw%3D%3D";
     private Gson gson = new Gson();
 
+    @Autowired
+    private FindStnService find_stn_service;
+
+    @Autowired
+    private GetAirDataService get_air_data_service;
+
+    @Autowired
+    private DBrealtmService db_realtm_service;
+
+    @Autowired
+    private DBForecastViewService db_forecast_view_service;
 
     // GPS로 받아서
     // 1. tm값으로 바꾸고,
@@ -39,59 +51,54 @@ public class GetGPSController {
     // 3. 측정소 API 검색
     // 4. return 측정 정보를 return. GPS 값을 보내줄 필요가 있냐.
     DBStNmDAO dbStNmDAO;
-    @PostMapping ("/location")
-    public String getPostLocation (@RequestBody @Validated GetLocation location) {
-
-        System.out.println("위도 : " + location.latitude + " 경도 : " + location.longitude);
-
-        return "위도 : " + location.latitude + " 경도 : " + location.longitude;
-    }
-
-
-    @GetMapping("/location")
-    public String getLocation (@RequestBody @Validated GetLocation location) {
-        System.out.println("위도 : " + location.latitude + " 경도 : " + location.longitude);
-        return "위도 : " + location.latitude + " 경도 : " + location.longitude;
-    }
-
-    @GetMapping("/ip")
-    public ResponseEntity<String> ip (HttpServletRequest request) {
-        // 요청을 보낸 클라이언트의 IP주소를 반환합니다.
-        System.out.println(request.getRemoteAddr());
-        return ResponseEntity.ok(request.getRemoteAddr());
-    }
-
-    @GetMapping("/test")
-    public String testMessage () {
-        System.out.println("욜꾤쑐뾸쬴뚈뚈ㄲ뚈");
-        return "욜꾤쑐뾸쬴뚈뚈ㄲ뚈ㄹ";
-    }
 
     @ResponseBody
-    @GetMapping("/fineDust")
-    public String dustData (@RequestBody @Validated GetLocation location) {
-        GeoPoint srcGeoPoint = new GeoPoint(Double.parseDouble(location.latitude), Double.parseDouble(location.longitude));
-        GeoPoint resultPoint = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, srcGeoPoint);
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/fineDust")
+    public String dustData(@RequestBody @Validated GetLocation location) {
+        count++;
+        System.out.println("호출된 횟수 : " + count);
+        try {
+            System.out.println("위도 : " + location.latitude + ", 경도 : " + location.longitude);
+            // 위도 경도를 tm좌표로 바꾸는 작업
+            GeoPoint srcGeoPoint = new GeoPoint(Double.parseDouble(location.latitude), Double.parseDouble(location.longitude));
+            GeoPoint resultPoint = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, srcGeoPoint);
 
-        String tm_x = String.valueOf(resultPoint.x);
-        String tm_y = String.valueOf(resultPoint.y);
+            System.out.println(resultPoint.x + ", " + resultPoint.y);
 
-        try{
-            List<OPNearStnDTO> op_near_stn_dto;
-            FindStnService find_stn_service = new FindStnService();
-            op_near_stn_dto = find_stn_service.callNearTMStnApi(tm_x, tm_y);
+            String tm_x = String.valueOf(resultPoint.x);
+            String tm_y = String.valueOf(resultPoint.y);
+
+            // tm 좌표로 가까운 측정소 명을 가져오는 작업
+
+            List<OPNearStnDTO> op_near_stn_dto = find_stn_service.callNearTMStnApi(tm_x, tm_y);
             String stn_name = op_near_stn_dto.get(0).getStationName();
+            String stn_address = op_near_stn_dto.get(0).getAddr();
+
             // stn_name을 이용하여 DB에 접근하는 service
+            TEST test = new TEST();
+            List<OPStnMsrDTO> stn_msr_dto = get_air_data_service.callStnMsrApi(stn_name);
 
-            // DB에 최신 값이 없으면 API 호출
-            List<OPStnMsrDTO> stn_msr_dto;
-            GetAirDataService get_air_data_service = new GetAirDataService();
-            stn_msr_dto = get_air_data_service.callStnMsrApi(stn_name);
-            // 새로운 값을 DB에 저장 하는 service
+            test.setStationAddress(stn_address);
+            test.setToday(stn_msr_dto.get(0));
 
-            return gson.toJson(stn_msr_dto.get(0));
-        }
-        catch (IOException e) {
+
+            System.out.println(stn_name);
+
+            try {
+                Optional<DBForecastViewDTO> optional = db_forecast_view_service.findForecast(stn_name);
+                DBForecastViewDTO data = optional.orElseThrow(NullPointerException::new);
+                System.out.println(data.getSTATION_NAME() + ", " + data.getSTATION_LOCATION());
+
+                System.out.println("db에 값이 있음");
+
+            } catch (NullPointerException e) {
+                System.out.println("db에 값이 없음");
+                // DB에 최신 값이 없으면 API 호출
+
+            }
+
+            return gson.toJson(test);
+        } catch (IOException e) {
             System.out.println("IOException 에러");
             return "{ errorMsg : IOExecption 에러, errorCode : 000}";
         }

@@ -4,6 +4,7 @@ import Yol.mise.Artifact.dto.OPStnMsrDTO;
 import Yol.mise.Artifact.dto.OPWeekFrcstDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -13,6 +14,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class GetAirDataService {
     final String base_url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/";
     final String service_key = "X87euFz3fd072hiDInhC%2F%2BvESJAmhyTBt%2FfIQT0iLvZiC3UZEDAcVtSZxNUZqW9GVaaRi%2BaCeL1Oz7ss8Scklw%3D%3D";
@@ -41,8 +43,7 @@ public class GetAirDataService {
                 System.out.println("IOException 에러");
                 return null;
             }
-        }
-        else {
+        } else {
             return null;
         }
     }

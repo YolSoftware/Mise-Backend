@@ -4,6 +4,7 @@ import Yol.mise.Artifact.dto.OPNearCityStnDTO;
 import Yol.mise.Artifact.dto.OPNearStnDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,6 +15,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class FindStnService {
     final String base_url = "http://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/";
     final String service_key = "X87euFz3fd072hiDInhC%2F%2BvESJAmhyTBt%2FfIQT0iLvZiC3UZEDAcVtSZxNUZqW9GVaaRi%2BaCeL1Oz7ss8Scklw%3D%3D";
@@ -27,6 +29,9 @@ public class FindStnService {
                 .queryParam("returnType", "json")
                 .queryParam("serviceKey", service_key)
                 .build();
+
+        System.out.println(uri_components.toString());
+
         OpenApiService helper = new OpenApiService(uri_components, null, null);
         helper.setRawData();
         helper.setJsonString(helper.getRaw_data());
