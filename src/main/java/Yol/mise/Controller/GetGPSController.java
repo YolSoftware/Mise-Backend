@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -94,6 +95,29 @@ public class GetGPSController {
             System.out.println("IOException 에러");
             return "{ errorMsg : IOExecption 에러, errorCode : 000}";
         }
+    }
+
+    @Autowired
+    private DBStinfoService db_stninfo_service;
+
+    @ResponseBody
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/test")
+    public boolean AutoUpdateRltmMsr() throws Exception {
+        int cnt = 0;
+        List<Object> stn_names = db_stninfo_service.findAllStationName();
+//        List<OPStnMsrDTO> stn_msr_dto = get_air_data_service.callStnMsrApi("고산리");
+        List<OPStnMsrDTO> stn_msr_dtos;
+        for(Object stn_name : stn_names) {
+            cnt += 1;
+            if (cnt >= 10) break;
+            stn_msr_dtos = get_air_data_service.callStnMsrApi(stn_name.toString());
+            // 다 잘 됬다고 가정합시다.
+            if (stn_msr_dtos != null) {
+                db_realtm_service.updateStationAir(stn_name.toString(), stn_msr_dtos.get(0));
+            }
+        }
+//        db_realtm_service.updateStationAir("고산리", stn_msr_dto.get(0));
+        return true;
     }
 
     @Data

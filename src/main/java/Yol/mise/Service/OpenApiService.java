@@ -43,26 +43,31 @@ public class OpenApiService {
 
     public int setJsonString(String raw_string) {
         Gson gson = new Gson();
-        JsonObject json = gson.fromJson(raw_string, JsonObject.class);
-        json = gson.fromJson(json.get("response"), JsonObject.class);
-        OPErrorCode error_code = gson.fromJson(json.get("header"), OPErrorCode.class);
-        if (error_code.getResultCode() == 0) {
-            json = gson.fromJson(json.get("body"), JsonObject.class);
-            int data_count = Integer.parseInt(json.get("totalCount").toString());
-            if (data_count > 0) {
-                json_string = json.get("items").toString();
-                return 0;
+        try{
+            JsonObject json = gson.fromJson(raw_string, JsonObject.class);
+            json = gson.fromJson(json.get("response"), JsonObject.class);
+            OPErrorCode error_code = gson.fromJson(json.get("header"), OPErrorCode.class);
+            if (error_code.getResultCode() == 0) {
+                json = gson.fromJson(json.get("body"), JsonObject.class);
+                int data_count = Integer.parseInt(json.get("totalCount").toString());
+                if (data_count > 0) {
+                    json_string = json.get("items").toString();
+                    return 0;
+                }
+                else {
+                    //값이 아에 없을 경우 전부다 null로 처리
+                    //TODO 값이 아에 없을 경우 가장 가까운곳을 찾아야지...
+                    //LocalDateTime current = LocalDateTime.now();
+                    //json_string = "{ \"so2Grade\":null,\"coFlag\":null,\"khaiValue\":null,\"so2Value\":null,\"coValue\":null,\"pm10Flag\":null,\"pm10Value\":null,\"o3Grade\":null,\"khaiGrade\":null,\"no2Flag\":null,\"no2Grade\":null,\"o3Flag\":null,\"so2Flag\":null,\"dataTime\":"+current.toString()+",\"coGrade\":null,\"no2Value\":null,\"pm10Grade\":null,\"o3Value\":null}";
+                    return 1;
+                }
             }
             else {
-                //값이 아에 없을 경우 전부다 null로 처리
-                //TODO 값이 아에 없을 경우 가장 가까운곳을 찾아야지...
-                //LocalDateTime current = LocalDateTime.now();
-                //json_string = "{ \"so2Grade\":null,\"coFlag\":null,\"khaiValue\":null,\"so2Value\":null,\"coValue\":null,\"pm10Flag\":null,\"pm10Value\":null,\"o3Grade\":null,\"khaiGrade\":null,\"no2Flag\":null,\"no2Grade\":null,\"o3Flag\":null,\"so2Flag\":null,\"dataTime\":"+current.toString()+",\"coGrade\":null,\"no2Value\":null,\"pm10Grade\":null,\"o3Value\":null}";
-                return 1;
+                return 2;
             }
-        }
-        else {
-            return 2;
+        }catch (Exception e) {
+            System.out.println(raw_string);
+            return 100;
         }
     }
 

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,6 @@ public class GetAirDataService {
 
                 Matcher m = pattern.matcher(json_string);
                 json_string = m.replaceAll("-1");
-                System.out.println(json_string);
                 try {
                     List<OPStnMsrDTO> stn_msr_dtos = gson.fromJson(json_string, list_type);
                     return stn_msr_dtos;
@@ -59,9 +59,8 @@ public class GetAirDataService {
             } else if(set_json_code == 1) {
                 List<OPStnMsrDTO> stn_msr_dtos = new ArrayList<>();
                 OPStnMsrDTO stn_msr_dto = new OPStnMsrDTO();
-
                 LocalDateTime current = LocalDateTime.now();
-                stn_msr_dto.setDataTime(current.toString());
+                stn_msr_dto.setDataTime(current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 stn_msr_dtos.add(stn_msr_dto);
                 return stn_msr_dtos;
             }

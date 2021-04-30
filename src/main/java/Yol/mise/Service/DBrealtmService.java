@@ -63,7 +63,7 @@ public class DBrealtmService {
                             .pm10Flag(opStnMsrDTO.getPm10Flag())
                             .pm25Flag(opStnMsrDTO.getPm25Flag())
                             .allAir(opStnMsrDTO.getKhaiValue())
-                            .updateTime(LocalDateTime.parse(opStnMsrDTO.getDataTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                            .updateTime(LocalDateTime.parse(opStnMsrDTO.getDataTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                             .build();
             dBrealtmDAO.save(new_station);
             return true;

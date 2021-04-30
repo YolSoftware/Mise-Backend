@@ -63,9 +63,12 @@ public class AutoDBUpdate {
 
     @Scheduled(cron = "0 3 0/2 * * *")
     public boolean AutoUpdateRltmMsr() throws Exception {
+        int cnt = 0;
         List<Object> stn_names = db_stninfo_service.findAllStationName();
         List<OPStnMsrDTO> stn_msr_dtos;
         for(Object stn_name : stn_names) {
+            cnt += 1;
+            if (cnt >= 10) break;
             stn_msr_dtos = get_air_data_service.callStnMsrApi(stn_name.toString());
             // 다 잘 됬다고 가정합시다.
             if (stn_msr_dtos != null) {
