@@ -25,10 +25,10 @@ public class DBtmafViewDTO implements Serializable {
     public String stationLocation;
 
     @Column(name = "GRADE_TM",updatable = false, nullable = true)
-    public int gradeTm;
+    public String gradeTm;
 
     @Column(name = "GRADE_AF",updatable = false, nullable = true)
-    public int gradeAf;
+    public String gradeAf;
 
     @Column(name = "UPDATE_TIME", updatable = false, nullable = false)
     public LocalDateTime updateTime;

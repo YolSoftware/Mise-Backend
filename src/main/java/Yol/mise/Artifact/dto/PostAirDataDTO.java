@@ -10,7 +10,12 @@ import java.util.HashMap;
 public class PostAirDataDTO {
     private String stationAddress;
     //private OPStnMsrDTO today;
-    private DBrealtmDTO today;
+    private TodayAirDataDTO today;
     private HashMap<String, String> tomorrow;
     private HashMap<String, String> dayAfterTommorow;
+
+//    public void setToday(DBrealtmDTO today2)
+//    {
+//
+//    }
 }

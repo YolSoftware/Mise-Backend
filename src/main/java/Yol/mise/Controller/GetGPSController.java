@@ -62,28 +62,27 @@ public class GetGPSController {
             post_air_data.setStationAddress(stn_address);
 
             try {
-//                List<OPStnMsrDTO> optional1 = get_air_data_service.callStnMsrApi(stn_name);
-//                OPStnMsrDTO data1 = optional1.get(0);
-
                 Optional<DBrealtmDTO> optional1 = db_realtm_service.findStationAir(stn_name);
                 DBrealtmDTO data1 = optional1.orElseThrow(NullPointerException::new);
-                post_air_data.setToday(data1);
+                TodayAirDataDTO data11 = db_realtm_service.TransTodayData(data1);
+                post_air_data.setToday(data11);
 
                 Optional<DBtmafViewDTO> optional2 = db_forecast_view_service.findTmAfStation(stn_name);
                 DBtmafViewDTO data2 = optional2.orElseThrow(NullPointerException::new);
 
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("pm25Grade", Integer.toString(data2.getGradeTm()));
+                hashMap.put("pm25Grade", data2.getGradeTm());
                 post_air_data.setTomorrow(hashMap);
 
                 hashMap.clear();
-                hashMap.put("pm25Grade", Integer.toString(data2.getGradeAf()));
+                hashMap.put("pm25Grade", data2.getGradeAf());
                 post_air_data.setDayAfterTommorow(hashMap);
 
                 System.out.println(data2.getStationName() + ", " + data2.getStationLocation());
                 System.out.println("db에 값이 있음");
                 return gson.toJson(post_air_data);
             } catch (Exception e) {
+                System.out.println(e.toString());
                 System.out.println("db에 값이 없음");
                 // DB에 최신 값이 없으면 API 호출
 
