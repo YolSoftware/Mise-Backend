@@ -107,8 +107,8 @@ public class DBTestController {
 
     @GetMapping(value ="/tmafstUpdate/{stlocation}/{grade_tm}/{grade_af}/{update_time}")
     public String tmafUpdate(@PathVariable String stlocation,
-                           @PathVariable int grade_tm,
-                           @PathVariable int grade_af,
+                           @PathVariable String grade_tm,
+                           @PathVariable String grade_af,
                            @PathVariable String update_time) throws Exception{
         LocalDateTime update_time_pars= LocalDateTime.parse(update_time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 

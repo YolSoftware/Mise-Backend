@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter // getter 메소드
 @ToString
@@ -60,7 +61,28 @@ public class DBrealtmDTO implements Serializable {
     @Column(name ="pm25_grade",updatable = true, nullable = true)
     public int pm25Grade;
 
+    @Column(name ="so2Flag",updatable = true, nullable = true)
+    public String so2Flag;
+
+    @Column(name ="coFlag",updatable = true, nullable = true)
+    public String coFlag;
+
+    @Column(name ="o3Flag",updatable = true, nullable = true)
+    public String o3Flag;
+
+    @Column(name ="no2Flag",updatable = true, nullable = true)
+    public String no2Flag;
+
+    @Column(name ="pm10Flag",updatable = true, nullable = true)
+    public String pm10Flag;
+
+    @Column(name ="pm25Flag",updatable = true, nullable = true)
+    public String pm25Flag;
+
     @Column(name ="all_air",updatable = true, nullable = true)
     public int allAir;
+
+    @Column(name = "update_time", updatable = true, nullable = true)
+    public LocalDateTime updateTime;
 
 }

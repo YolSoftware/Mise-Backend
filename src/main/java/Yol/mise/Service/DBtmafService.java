@@ -43,11 +43,18 @@ public class DBtmafService {
         return dBtmafDTOOptional;
     }
 
+    //측정소 위치 (station_location) 모든 이름 반환
+    public List<Object> findAllLocation() throws Exception{
+        final List<Object> dbStlocationDTOList = dBtmafDAO.findAllStationLocation();
+        return dbStlocationDTOList;
+
+    }
+
     @Transactional
     //특정위치 내일,모레 대기정보 업데이트
     public boolean UpdateTmAfLocation(String stlocation,
-                                      int gradeTm,
-                                      int gradeAf,
+                                      String gradeTm,
+                                      String gradeAf,
                                       LocalDateTime updateTime) throws Exception{
         final Optional<DBtmafDTO> dBtmafDTOOptional = dBtmafDAO.findById(stlocation);
 

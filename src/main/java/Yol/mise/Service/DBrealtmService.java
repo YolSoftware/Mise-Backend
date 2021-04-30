@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +55,14 @@ public class DBrealtmService {
                             .no2Grade(opStnMsrDTO.getNo2Grade())
                             .pm10Grade(opStnMsrDTO.getPm10Grade())
                             .pm25Grade(opStnMsrDTO.getPm25Grade())
+                            .so2Flag(opStnMsrDTO.getSo2Flag())
+                            .coFlag(opStnMsrDTO.getCoFlag())
+                            .o3Flag(opStnMsrDTO.getO3Flag())
+                            .no2Flag(opStnMsrDTO.getNo2Flag())
+                            .pm10Flag(opStnMsrDTO.getPm10Flag())
+                            .pm25Flag(opStnMsrDTO.getPm25Flag())
                             .allAir(opStnMsrDTO.getKhaiValue())
+                            .updateTime(LocalDateTime.parse(opStnMsrDTO.getDataTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                             .build();
             dBrealtmDAO.save(new_station);
             return true;

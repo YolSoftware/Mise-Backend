@@ -20,10 +20,10 @@ public class DBtmafDTO implements Serializable {
     public String stationLocation;
 
     @Column(name = "grade_tm",updatable = true, nullable = true)
-    public int gradeTm;
+    public String gradeTm;
 
     @Column(name = "grade_af",updatable = true, nullable = true)
-    public int gradeAf;
+    public String gradeAf;
 
     @Column(name = "update_time", updatable = true, nullable = true)
     public LocalDateTime updateTime;
