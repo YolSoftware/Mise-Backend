@@ -50,6 +50,7 @@ public class DBrealtmService {
                             .no2(opStnMsrDTO.getNo2Value())
                             .pm10(opStnMsrDTO.getPm10Value())
                             .pm25(opStnMsrDTO.getPm25Value())
+                            .so2Grade(opStnMsrDTO.getSo2Grade())
                             .coGrade(opStnMsrDTO.getCoGrade())
                             .o3Grade(opStnMsrDTO.getO3Grade())
                             .no2Grade(opStnMsrDTO.getNo2Grade())
