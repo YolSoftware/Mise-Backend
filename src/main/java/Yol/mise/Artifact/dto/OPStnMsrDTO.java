@@ -6,8 +6,33 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class OPStnMsrDTO {
+    public OPStnMsrDTO() {
+        so2Flag = null;
+        so2Grade = -1;
+        so2Value = -1;
+        coFlag = null;
+        coGrade = -1;
+        coValue = -1;
+
+        pm10Flag = null;
+        pm10Grade = -1;
+        pm10Value = -1;
+        pm25Flag = null;
+        pm25Grade = -1;
+        pm25Value = -1;
+
+        no2Flag = null;
+        no2Grade = -1;
+        no2Value = -1;
+
+        o3Flag = null;
+        o3Grade = -1;
+        o3Value = -1;
+
+        khaiGrade = -1;
+        khaiValue = -1;
+    }
     private int so2Grade;
     private String so2Flag;
     private float so2Value;
