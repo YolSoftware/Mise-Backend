@@ -23,5 +23,4 @@ public interface DBStinfoDAO extends JpaRepository<DBStinfoDTO, String> {
 
     @Query("select s.stationName from station_info s ")
     List<Object> findAllStationName();
-
 }

@@ -11,11 +11,6 @@ public class PostAirDataDTO {
     private String stationAddress;
     //private OPStnMsrDTO today;
     private TodayAirDataDTO today;
-    private HashMap<String, String> tomorrow;
-    private HashMap<String, String> dayAfterTommorow;
-
-//    public void setToday(DBrealtmDTO today2)
-//    {
-//
-//    }
+    private TmAirDataDTO tomorrow;
+    private AfAirDataDTO dayAfterTomorrow;
 }

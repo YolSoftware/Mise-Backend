@@ -36,7 +36,7 @@ public class TodayAirDataDTO
     private int khaiValue;
     private String khaiGrade;
 
-    private LocalDateTime measureDate; // 오염도 측정 시간 (연-월-일)
+    private LocalDateTime date; // 오염도 측정 시간 (연-월-일)
 
 
 }

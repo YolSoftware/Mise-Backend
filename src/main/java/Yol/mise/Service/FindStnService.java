@@ -18,7 +18,8 @@ import java.util.List;
 @Service
 public class FindStnService {
     final String base_url = "http://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/";
-    final String service_key = "X87euFz3fd072hiDInhC%2F%2BvESJAmhyTBt%2FfIQT0iLvZiC3UZEDAcVtSZxNUZqW9GVaaRi%2BaCeL1Oz7ss8Scklw%3D%3D";
+    final String service_key = "UKAWAf3EhvJil04IrFkiY14vzSHgbdJMDP%2FLcsO0ZrlV3b5WVztzsF8%2FceIqTCXZq4p2joLn3v3Y5Cr%2F0KPPDA%3D%3D";
+    //final String service_key = "X87euFz3fd072hiDInhC%2F%2BvESJAmhyTBt%2FfIQT0iLvZiC3UZEDAcVtSZxNUZqW9GVaaRi%2BaCeL1Oz7ss8Scklw%3D%3D";
     public Gson gson = new Gson();
 
     public List<OPNearStnDTO> callNearTMStnApi(String tm_x, String tm_y) throws IOException {
